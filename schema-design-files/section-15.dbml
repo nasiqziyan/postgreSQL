@@ -3,6 +3,13 @@ Table users {
   created_at TIMESTAMP
   updated_at TIMESTAMP
   username VARCHAR(30)
+  bio VARCHAR(400)                            // Part 5
+  avatar VARCHAR(200)                         // Part 5
+  phone VARCHAR(25)                           // Part 5; We use VARCHAR as opposed to INTEGER because we never expect to perform numeric calculations on it.
+  email VARCHAR(40)                           // Part 5
+  password VARCHAR(50)                        // Part 5; Normally this will be a hashed value which is passed for validation somewhere else.
+  status VARCHAR(15)                          // Part 5 e.g. online, offline, busy (VARCHAR is not a good choice because we only have a few choices of statuses)
+  
 }
 
 Table posts {
@@ -11,6 +18,10 @@ Table posts {
   updated_at TIMESTAMP
   url VARCHAR(200)
   user_id INTEGER [ref: > users.id]
+  caption VARCHAR(240)
+  lat REAL                                    // Part 3
+  lng REAL                                    // Part 3
+  
 }
 
 Table comments {
@@ -22,8 +33,56 @@ Table comments {
   post_id INTEGER [ref: > posts.id]
 }
 
+// -------------- Part 2 --------------
 
+TABLE likes {
+  id SERIAL [pk, increment]
+  created_at TIMESTAMP
+  user_id INTEGER [ref: > users.id]
+  comment_id INTEGER [ref: > comments.id]
+  post_id INTEGER [ref: > posts.id]   
+}
 
+// -------------- Part 3 --------------
 
+  
+Table photo_tags {
+  id SERIAL [pk, increment]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+  post_id INTEGER [ref: > posts.id]
+  user_id INTEGER [ref: > users.id]
+  x INTEGER
+  y INTEGER
+}  
 
+Table caption_tags {
+  id SERIAL [pk, increment]
+  created_at TIMESTAMP  
+  post_id INTEGER [ref: > posts.id]
+  user_id INTEGER [ref: > users.id]
+}   
+  
+// -------------- Part 4 --------------
+  
+  
+Table hashtags {
+  id serial [pk, increment]
+  created_at timestamp
+  title VARCHAR(20)
+}
 
+Table hashtags_posts {
+  id serial [pk, increment]
+  hashtag_id INTEGER [ref: > hashtags.id]
+  post_id INTEGER [ref: > posts.id]
+}
+
+// -------------- Part 6 --------------
+
+Table followers {
+  id serial [pk, increment]
+  created_at TIMESTAMP
+  leader_id INTEGER [ref: > users.id]
+  follower_id INTEGER [ref: > users.id]
+}
