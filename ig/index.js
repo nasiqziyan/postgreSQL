@@ -5,8 +5,8 @@ const pool = new pg.Pool({
   host: 'localhost',
   port: 5432,
   database: 'socialnetwork',
-  user: 'nasiq',
-  password: 'nasiq123',
+  user: '<USERNAME>',
+  password: '<PASSWORD>',
 });
 
 const app = express();
